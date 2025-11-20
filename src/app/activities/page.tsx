@@ -4,29 +4,9 @@ import { useState, useEffect } from 'react'
 import { ActivityCard } from '@/components/activities/activity-card'
 import { ActivityFilters } from '@/components/activities/activity-filters'
 import { Button } from '@/components/ui/button'
-import type { Category, District, Difficulty } from '@/types'
+import type { Category, District, Difficulty, Activity as ActivityType } from '@/types'
 
-interface Activity {
-  id: string
-  title: string
-  description: string
-  category: Category
-  date: string
-  startTime: string
-  endTime: string
-  address: {
-    full: string
-    district: District
-    coordinates: { lat: number; lng: number }
-  }
-  difficulty: Difficulty
-  maxParticipants: number
-  currentParticipants: number
-  thumbnail?: string
-  views: number
-  avgRating: number
-  reviewCount: number
-  status: string
+type Activity = ActivityType & {
   organization?: {
     id: string
     name: string
