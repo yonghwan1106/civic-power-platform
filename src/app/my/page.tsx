@@ -11,6 +11,17 @@ import {
   Trophy, Clock, Calendar, Star, TrendingUp, Award
 } from 'lucide-react'
 
+interface BadgeDefinition {
+  id: string
+  name: string
+  icon: string
+  description: string
+  requirement: string
+  requiredValue: number
+  currentValue?: number
+  unlocked: boolean
+}
+
 interface UserDashboardData {
   user: {
     id: string
@@ -39,6 +50,20 @@ interface UserDashboardData {
   }>
 }
 
+// All available badges with their requirements
+const ALL_BADGES: Omit<BadgeDefinition, 'currentValue' | 'unlocked'>[] = [
+  { id: 'seedling', name: '새싹', icon: '🌱', description: '첫 활동 완료', requirement: '활동 참여', requiredValue: 1 },
+  { id: 'sprout', name: '새순', icon: '🌿', description: '5개 활동 완료', requirement: '활동 참여', requiredValue: 5 },
+  { id: 'tree', name: '나무', icon: '🌳', description: '10개 활동 완료', requirement: '활동 참여', requiredValue: 10 },
+  { id: 'forest', name: '숲', icon: '🌲', description: '25개 활동 완료', requirement: '활동 참여', requiredValue: 25 },
+  { id: 'action-hero', name: '액션 히어로', icon: '🏃', description: '3회 연속 참여', requirement: '연속 참여', requiredValue: 3 },
+  { id: 'marathon', name: '마라토너', icon: '🏅', description: '7회 연속 참여', requirement: '연속 참여', requiredValue: 7 },
+  { id: 'time-keeper', name: '시간 지킴이', icon: '⏰', description: '20시간 봉사', requirement: '봉사 시간', requiredValue: 20 },
+  { id: 'time-master', name: '시간 마스터', icon: '⌚', description: '50시간 봉사', requirement: '봉사 시간', requiredValue: 50 },
+  { id: 'reviewer', name: '후기왕', icon: '✍️', description: '5개 후기 작성', requirement: '후기 작성', requiredValue: 5 },
+  { id: 'super-reviewer', name: '슈퍼 후기왕', icon: '📝', description: '15개 후기 작성', requirement: '후기 작성', requiredValue: 15 },
+]
+
 export default function MyDashboardPage() {
   const [data, setData] = useState<UserDashboardData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -46,6 +71,36 @@ export default function MyDashboardPage() {
 
   // Mock user ID - in real app, this would come from auth
   const mockUserId = 'user-' + Math.random().toString(36).substring(7)
+
+  // Calculate badge progress based on user stats
+  const getBadgeProgress = (): BadgeDefinition[] => {
+    if (!data) return []
+
+    return ALL_BADGES.map((badge) => {
+      let currentValue = 0
+
+      switch (badge.requirement) {
+        case '활동 참여':
+          currentValue = data.stats.totalActivities
+          break
+        case '연속 참여':
+          currentValue = data.user.streak
+          break
+        case '봉사 시간':
+          currentValue = data.stats.totalHours
+          break
+        case '후기 작성':
+          currentValue = data.stats.reviewsWritten
+          break
+      }
+
+      return {
+        ...badge,
+        currentValue,
+        unlocked: data.user.badges.includes(badge.id),
+      }
+    })
+  }
 
   useEffect(() => {
     fetchDashboardData()
@@ -333,17 +388,59 @@ export default function MyDashboardPage() {
             {/* Badges */}
             <Card>
               <CardHeader>
-                <CardTitle>획득한 뱃지</CardTitle>
+                <CardTitle>뱃지 컬렉션</CardTitle>
                 <CardDescription>
-                  {data.badges.length}개의 뱃지를 획득했습니다
+                  {data.user.badges.length}/{ALL_BADGES.length}개 획득
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-4">
-                  {data.badges.map((badge) => (
-                    <div key={badge.id} className="text-center">
-                      <div className="text-4xl mb-2">{badge.icon}</div>
-                      <p className="text-xs font-medium">{badge.name}</p>
+                <div className="space-y-4">
+                  {getBadgeProgress().map((badge) => (
+                    <div
+                      key={badge.id}
+                      className={`p-3 rounded-lg border transition-all ${
+                        badge.unlocked
+                          ? 'bg-primary/5 border-primary/20'
+                          : 'bg-muted/30 border-muted opacity-60'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`text-3xl ${!badge.unlocked && 'grayscale opacity-50'}`}>
+                          {badge.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="font-semibold text-sm">{badge.name}</p>
+                            {badge.unlocked && (
+                              <span className="text-xs text-primary">✓</span>
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground mb-2">
+                            {badge.description}
+                          </p>
+                          {!badge.unlocked && (
+                            <>
+                              <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
+                                <span>{badge.requirement}</span>
+                                <span className="font-medium">
+                                  {badge.currentValue}/{badge.requiredValue}
+                                </span>
+                              </div>
+                              <div className="w-full bg-muted rounded-full h-1.5">
+                                <div
+                                  className="bg-primary h-1.5 rounded-full transition-all"
+                                  style={{
+                                    width: `${Math.min(
+                                      ((badge.currentValue || 0) / badge.requiredValue) * 100,
+                                      100
+                                    )}%`,
+                                  }}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
