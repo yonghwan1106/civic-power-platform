@@ -1,0 +1,194 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { ActivityCard } from '@/components/activities/activity-card'
+import { ActivityFilters } from '@/components/activities/activity-filters'
+import { Button } from '@/components/ui/button'
+import type { Category, District, Difficulty } from '@/types'
+
+interface Activity {
+  id: string
+  title: string
+  description: string
+  category: Category
+  date: string
+  startTime: string
+  endTime: string
+  address: {
+    full: string
+    district: District
+    coordinates: { lat: number; lng: number }
+  }
+  difficulty: Difficulty
+  maxParticipants: number
+  currentParticipants: number
+  thumbnail?: string
+  views: number
+  avgRating: number
+  reviewCount: number
+  status: string
+  organization?: {
+    id: string
+    name: string
+    logo?: string
+    verified: boolean
+  } | null
+}
+
+export default function ActivitiesPage() {
+  const [activities, setActivities] = useState<Activity[]>([])
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [categories, setCategories] = useState<Category[]>([])
+  const [districts, setDistricts] = useState<District[]>([])
+  const [difficulty, setDifficulty] = useState<Difficulty | undefined>()
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+
+  useEffect(() => {
+    fetchActivities()
+  }, [search, categories, districts, difficulty, page])
+
+  const fetchActivities = async () => {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        pageSize: '12',
+        status: 'open',
+      })
+
+      if (search) params.append('search', search)
+      if (categories.length > 0) params.append('categories', categories.join(','))
+      if (districts.length > 0) params.append('districts', districts.join(','))
+      if (difficulty) params.append('difficulty', difficulty)
+
+      const response = await fetch(`/api/activities?${params}`)
+      const result = await response.json()
+
+      if (result.success) {
+        setActivities(result.data.items)
+        setTotal(result.data.total)
+        setTotalPages(result.data.totalPages)
+      }
+    } catch (error) {
+      console.error('Failed to fetch activities:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleReset = () => {
+    setSearch('')
+    setCategories([])
+    setDistricts([])
+    setDifficulty(undefined)
+    setPage(1)
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">봉사활동 둘러보기</h1>
+          <p className="text-muted-foreground">
+            용인시에서 진행되는 다양한 봉사활동을 찾아보세요
+          </p>
+        </div>
+
+        {/* Filters */}
+        <div className="mb-8">
+          <ActivityFilters
+            search={search}
+            onSearchChange={setSearch}
+            categories={categories}
+            onCategoriesChange={setCategories}
+            districts={districts}
+            onDistrictsChange={setDistricts}
+            difficulty={difficulty}
+            onDifficultyChange={setDifficulty}
+            onReset={handleReset}
+          />
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-4 flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            총 <span className="font-semibold text-foreground">{total}</span>개의 활동
+          </p>
+        </div>
+
+        {/* Activities Grid */}
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="h-[400px] bg-muted animate-pulse rounded-lg" />
+            ))}
+          </div>
+        ) : activities.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {activities.map((activity) => (
+                <ActivityCard key={activity.id} activity={activity} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                >
+                  이전
+                </Button>
+                <div className="flex items-center gap-2">
+                  {[...Array(totalPages)].map((_, i) => {
+                    const pageNum = i + 1
+                    // Show first page, last page, current page, and pages around current
+                    if (
+                      pageNum === 1 ||
+                      pageNum === totalPages ||
+                      (pageNum >= page - 1 && pageNum <= page + 1)
+                    ) {
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={page === pageNum ? 'default' : 'outline'}
+                          onClick={() => setPage(pageNum)}
+                          className="w-10"
+                        >
+                          {pageNum}
+                        </Button>
+                      )
+                    } else if (pageNum === page - 2 || pageNum === page + 2) {
+                      return <span key={pageNum}>...</span>
+                    }
+                    return null
+                  })}
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                >
+                  다음
+                </Button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-xl text-muted-foreground mb-4">
+              검색 결과가 없습니다
+            </p>
+            <Button onClick={handleReset}>필터 초기화</Button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
