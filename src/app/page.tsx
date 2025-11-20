@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -53,12 +54,16 @@ export default function Home() {
         </div>
 
         <div className="text-center space-x-4">
-          <Button size="lg">
-            활동 둘러보기
-          </Button>
-          <Button size="lg" variant="outline">
-            시작하기
-          </Button>
+          <Link href="/activities">
+            <Button size="lg">
+              활동 둘러보기
+            </Button>
+          </Link>
+          <Link href="/my">
+            <Button size="lg" variant="outline">
+              시작하기
+            </Button>
+          </Link>
         </div>
 
         <div className="mt-16 p-6 bg-muted rounded-lg">
