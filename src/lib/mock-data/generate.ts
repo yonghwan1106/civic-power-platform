@@ -98,7 +98,7 @@ export function generateUser(index: number): User {
     id: generateId('user-'),
     email,
     name,
-    avatar: randomBoolean(0.7) ? `/avatars/${randomInt(1, 20)}.jpg` : undefined,
+    avatar: undefined, // UI-Avatars API fallback 사용
     phone: generatePhone(),
     birthYear,
     gender: randomItem(['male', 'female', 'other']),
@@ -158,8 +158,8 @@ export function generateOrganization(index: number): Organization {
   return {
     id: generateId('org-'),
     name,
-    logo: randomBoolean(0.8) ? `/org-logos/${randomInt(1, 15)}.png` : undefined,
-    coverImage: randomBoolean(0.5) ? `/org-covers/${randomInt(1, 10)}.jpg` : undefined,
+    logo: undefined, // UI-Avatars API fallback 사용 (organization 페이지의 onError 핸들러)
+    coverImage: undefined,
     description: `${name}는 용인시 지역사회를 위해 활동하는 ${type === 'npo' ? '비영리단체' : type === 'social-enterprise' ? '사회적기업' : type === 'volunteer-center' ? '자원봉사센터' : '협동조합'}입니다.`,
     category: type,
     phone: generatePhone(),

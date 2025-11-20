@@ -133,15 +133,19 @@ export default function OrganizationDashboardPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
-              {data.organization.logo && (
+              {data.organization.logo ? (
                 <img
                   src={data.organization.logo}
                   alt={data.organization.name}
                   className="w-16 h-16 rounded-full"
                   onError={(e) => {
-                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.organization.name)}&background=0ea5e9&color=fff`
+                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.organization.name)}&background=0ea5e9&color=fff&size=64`
                   }}
                 />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-2xl font-bold">
+                  {data.organization.name.charAt(0)}
+                </div>
               )}
               <div>
                 <div className="flex items-center gap-2">
@@ -349,12 +353,19 @@ export default function OrganizationDashboardPage() {
                     {data.pendingApplications.slice(0, 5).map((application) => (
                       <div key={application.id} className="flex items-start justify-between">
                         <div className="flex items-center gap-2">
-                          {application.user?.avatar && (
+                          {application.user?.avatar ? (
                             <img
                               src={application.user.avatar}
                               alt={application.user.name}
                               className="w-8 h-8 rounded-full"
+                              onError={(e) => {
+                                e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(application.user?.name || 'U')}&background=0ea5e9&color=fff&size=32`
+                              }}
                             />
+                          ) : (
+                            <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
+                              {(application.user?.name || 'U').charAt(0)}
+                            </div>
                           )}
                           <div>
                             <p className="text-sm font-medium">
