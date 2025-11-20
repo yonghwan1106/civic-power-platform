@@ -26,6 +26,8 @@ export default function ActivitiesPage() {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
+  const [viewMode, setViewMode] = useState<'pagination' | 'infinite'>('pagination')
+  const [hasMore, setHasMore] = useState(true)
 
   // 검색 디바운싱
   useEffect(() => {
@@ -48,6 +50,31 @@ export default function ActivitiesPage() {
     fetchActivities()
   }, [page])
 
+  // 무한 스크롤 옵저버
+  useEffect(() => {
+    if (viewMode !== 'infinite') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          setPage((prev) => prev + 1)
+        }
+      },
+      { threshold: 0.5 }
+    )
+
+    const sentinel = document.querySelector('#infinite-scroll-sentinel')
+    if (sentinel) {
+      observer.observe(sentinel)
+    }
+
+    return () => {
+      if (sentinel) {
+        observer.unobserve(sentinel)
+      }
+    }
+  }, [viewMode, hasMore, loading])
+
   const fetchActivities = async () => {
     setLoading(true)
     try {
@@ -66,9 +93,16 @@ export default function ActivitiesPage() {
       const result = await response.json()
 
       if (result.success) {
-        setActivities(result.data.items)
+        if (viewMode === 'infinite' && page > 1) {
+          // 무한 스크롤: 기존 데이터에 추가
+          setActivities((prev) => [...prev, ...result.data.items])
+        } else {
+          // 페이지네이션: 새로 교체
+          setActivities(result.data.items)
+        }
         setTotal(result.data.total)
         setTotalPages(result.data.totalPages)
+        setHasMore(page < result.data.totalPages)
       } else {
         toast.error('활동 목록을 불러오는데 실패했습니다.')
       }
@@ -114,11 +148,35 @@ export default function ActivitiesPage() {
           />
         </div>
 
-        {/* Results Count */}
+        {/* Results Count & View Mode Toggle */}
         <div className="mb-4 flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
             총 <span className="font-semibold text-foreground">{total}</span>개의 활동
           </p>
+          <div className="flex items-center gap-2">
+            <Button
+              variant={viewMode === 'pagination' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => {
+                setViewMode('pagination')
+                setPage(1)
+                setActivities([])
+              }}
+            >
+              페이지네이션
+            </Button>
+            <Button
+              variant={viewMode === 'infinite' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => {
+                setViewMode('infinite')
+                setPage(1)
+                setActivities([])
+              }}
+            >
+              무한 스크롤
+            </Button>
+          </div>
         </div>
 
         {/* Activities Grid */}
@@ -136,8 +194,8 @@ export default function ActivitiesPage() {
               ))}
             </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
+            {/* Pagination / Infinite Scroll Sentinel */}
+            {viewMode === 'pagination' && totalPages > 1 ? (
               <div className="flex justify-center gap-2">
                 <Button
                   variant="outline"
@@ -179,7 +237,22 @@ export default function ActivitiesPage() {
                   다음
                 </Button>
               </div>
-            )}
+            ) : viewMode === 'infinite' && hasMore ? (
+              <div id="infinite-scroll-sentinel" className="flex justify-center py-8">
+                {loading ? (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                    <span>더 불러오는 중...</span>
+                  </div>
+                ) : (
+                  <div className="text-muted-foreground">스크롤하여 더 보기</div>
+                )}
+              </div>
+            ) : viewMode === 'infinite' && !hasMore ? (
+              <div className="text-center py-8 text-muted-foreground">
+                모든 활동을 불러왔습니다
+              </div>
+            ) : null}
           </>
         ) : (
           <div className="text-center py-16">

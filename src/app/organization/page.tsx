@@ -10,6 +10,16 @@ import {
   Users, Calendar, Clock, Star, TrendingUp, UserCheck, Activity as ActivityIcon,
   Plus, BarChart3
 } from 'lucide-react'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from 'recharts'
 
 interface OrganizationDashboardData {
   organization: {
@@ -241,29 +251,18 @@ export default function OrganizationDashboardPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {data.monthlyTrend.map((month) => (
-                    <div key={month.month} className="flex items-center gap-4">
-                      <div className="w-16 text-sm font-medium">{month.month}</div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                            <div
-                              className="bg-primary h-full"
-                              style={{ width: `${(month.participants / 100) * 100}%` }}
-                            />
-                          </div>
-                          <span className="text-sm font-medium w-16 text-right">
-                            {month.participants}명
-                          </span>
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                          활동 {month.activities}개
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={data.monthlyTrend}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis yAxisId="left" orientation="left" stroke="#0ea5e9" />
+                    <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+                    <Tooltip />
+                    <Legend />
+                    <Bar yAxisId="left" dataKey="activities" fill="#0ea5e9" name="활동 수" />
+                    <Bar yAxisId="right" dataKey="participants" fill="#82ca9d" name="참여자 수" />
+                  </BarChart>
+                </ResponsiveContainer>
               </CardContent>
             </Card>
 
