@@ -205,10 +205,10 @@
 
 ### 장기 개선 (Low Priority)
 11. 인증 시스템 구현
-12. 실제 차트 구현
-13. 무한 스크롤
-14. 뱃지 시스템 고도화
-15. PWA 지원
+12. ✅ 실제 차트 구현
+13. ✅ 무한 스크롤
+14. ✅ 뱃지 시스템 고도화
+15. ✅ PWA 지원
 
 ---
 
@@ -231,3 +231,23 @@
 - 반응형 grid 개선 (sm:grid-cols-1)
 - aria-label 추가 (접근성)
 - fade-in 애니메이션 및 transition 추가
+
+**Low Priority 작업 완료:**
+- 단체 대시보드 recharts 월별 추이 차트
+  * 이중 Y축 (활동 수 / 참여자 수)
+  * CartesianGrid, Tooltip, Legend
+- 활동 목록 무한 스크롤 구현
+  * Intersection Observer API
+  * 페이지네이션/무한 스크롤 토글
+- 뱃지 시스템 고도화
+  * 10개 전체 뱃지 목록 정의
+  * 획득 조건 및 진행도 표시
+  * 미획득 뱃지 시각화 (grayscale, 투명도)
+  * 진행도 바 (현재값/목표값)
+- PWA 지원 추가
+  * @ducanh2912/next-pwa 패키지
+  * manifest.json 생성
+  * 서비스 워커 자동 생성
+  * 오프라인 페이지 (/offline)
+  * 192x192, 512x512 아이콘
+  * Next.js 16 viewport API 적용
