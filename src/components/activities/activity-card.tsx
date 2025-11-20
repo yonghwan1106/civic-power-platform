@@ -43,27 +43,41 @@ export function ActivityCard({ activity, matchingScore }: ActivityCardProps) {
   const isFull = spotsLeft <= 0
   const isAlmostFull = spotsLeft <= 3 && spotsLeft > 0
 
+  // 카테고리별 Unsplash 이미지
+  const getCategoryImage = (category: string) => {
+    const imageMap: Record<string, string> = {
+      environment: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop',
+      education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop',
+      welfare: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop',
+      culture: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&h=400&fit=crop',
+      animal: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&h=400&fit=crop',
+      disaster: 'https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?w=600&h=400&fit=crop',
+      other: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&h=400&fit=crop',
+    }
+    return imageMap[category] || imageMap.other
+  }
+
+  const thumbnailUrl = activity.thumbnail || getCategoryImage(activity.category)
+
   return (
     <Link href={`/activities/${activity.id}`}>
       <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer overflow-hidden">
         {/* Thumbnail */}
-        {activity.thumbnail && (
-          <div className="relative h-48 bg-muted overflow-hidden">
-            <img
-              src={activity.thumbnail}
-              alt={activity.title}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = `https://placehold.co/600x400/0ea5e9/white?text=${encodeURIComponent(categoryLabels[activity.category])}`
-              }}
-            />
-            {matchingScore && matchingScore >= 70 && (
-              <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                {matchingScore}% 매칭
-              </div>
-            )}
-          </div>
-        )}
+        <div className="relative h-48 bg-muted overflow-hidden">
+          <img
+            src={thumbnailUrl}
+            alt={activity.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.currentTarget.src = getCategoryImage(activity.category)
+            }}
+          />
+          {matchingScore && matchingScore >= 70 && (
+            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+              {matchingScore}% 매칭
+            </div>
+          )}
+        </div>
 
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2 mb-2">
