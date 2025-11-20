@@ -256,8 +256,8 @@ export function generateActivity(
     preparation: randomItems(activityPreparation, randomInt(1, 3)),
     notices: ['활동 30분 전까지 도착해주세요.', '우천 시 일정이 변경될 수 있습니다.'],
     benefits: ['봉사시간 인증', '간식 제공'],
-    images: Array.from({ length: randomInt(1, 4) }, (_, i) => `/activity-images/${randomInt(1, 50)}.jpg`),
-    thumbnail: `/activity-thumbnails/${randomInt(1, 30)}.jpg`,
+    images: [],
+    thumbnail: undefined, // undefined로 설정하여 activity-card의 getCategoryImage fallback 사용
     contact: {
       name: randomItem(org.members).userId,
       phone: org.phone,
