@@ -1,36 +1,249 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 시민력 플랫폼 (Civic Power Platform)
 
-## Getting Started
+> **국무조정실 시민사회비서관실 「시민 공감차 아이디어 공모전」 제출작**
+> 공모기간: 2024년 11월 6일 ~ 12월 5일
 
-First, run the development server:
+## 📋 프로젝트 개요
+
+**시민력 플랫폼**은 AI 기반 스마트 매칭으로 시민과 공익활동을 연결하여, **시민사회 참여를 활성화**하고 **정부-시민사회 간 협력을 강화**하는 디지털 플랫폼입니다.
+
+### 🎯 공모전 주제 부합도
+
+본 프로젝트는 다음과 같이 공모전 주제에 부합합니다:
+
+#### 1️⃣ 정부와 시민사회 간 협력 체계 강화
+- **투명한 활동 관리**: 모든 봉사활동이 플랫폼에 등록되어 정부가 시민사회 활동을 체계적으로 파악
+- **데이터 기반 정책 수립**: 활동 통계, 참여 현황, 지역별 분포 등 데이터를 통한 효과적인 정책 설계
+- **인증 시스템**: 봉사시간 자동 기록 및 인증서 발급으로 신뢰성 확보
+
+#### 2️⃣ 시민사회의 자율성·참여성 향상
+- **AI 맞춤 추천**: 개인의 관심사, 위치, 시간대, 난이도를 분석하여 최적의 활동 제안
+- **낮은 진입장벽**: 간편한 검색, 필터링, 신청 프로세스로 누구나 쉽게 참여
+- **자율적 선택**: 다양한 활동 옵션 제공으로 시민의 주체적 선택 보장
+
+#### 3️⃣ 공익활동 활성화
+- **활동 가시성 제고**: 500개 단체, 200개 활동을 한눈에 볼 수 있는 통합 플랫폼
+- **참여 동기 부여**: 뱃지 시스템, 레벨 시스템, 통계 대시보드로 지속적인 참여 유도
+- **지역사회 연결**: 용인시 기반 로컬 활동으로 지역 공동체 활성화
+
+#### 4️⃣ 국민적 관심을 높일 수 있는 아이디어
+- **AI 기술 활용**: 최신 기술로 공익활동을 혁신하여 젊은 세대의 관심 유도
+- **게임화 요소**: 뱃지, 레벨, 스트릭 등으로 재미있고 지속 가능한 참여 문화 조성
+- **성과 가시화**: 개인/단체의 영향력을 수치화하여 보람과 자긍심 제공
+
+---
+
+## ✨ 주요 기능
+
+### 🤖 AI 스마트 매칭
+- 관심사, 위치, 시간대, 난이도, 활동 이력 기반 개인화 추천
+- 참여 가능성이 높은 활동을 우선 제안
+
+### 📊 시민 대시보드
+- 참여 통계, 봉사시간, 레벨 진행도 확인
+- 획득 뱃지 및 다음 목표 확인
+- 추천 활동 및 신청 이력 관리
+
+### 🏢 단체 대시보드
+- 활동 등록 및 참여자 관리
+- 월별 활동 추이 및 통계 분석
+- 신청자 승인/거절 처리
+- 후기 및 평점 관리
+
+### 🔍 활동 검색 및 필터
+- 카테고리, 지역, 날짜, 난이도별 검색
+- 실시간 검색어 디바운싱
+- 페이지네이션 및 무한 스크롤 지원
+
+### 🎖️ 뱃지 시스템
+- 10가지 뱃지 (새싹, 새순, 나무, 액션히어로, 열정맨 등)
+- 획득 조건 및 진행도 표시
+- 미획득 뱃지 시각화
+
+### 📱 PWA 지원
+- 모바일 앱처럼 설치 가능
+- 오프라인 페이지 지원
+- 푸시 알림 준비
+
+---
+
+## 🛠️ 기술 스택
+
+### Frontend
+- **Next.js 16.0.3** - React 기반 풀스택 프레임워크
+- **TypeScript** - 타입 안정성
+- **Tailwind CSS** - 유틸리티 CSS 프레임워크
+- **shadcn/ui** - 고품질 UI 컴포넌트
+- **Lucide Icons** - 아이콘 라이브러리
+
+### 데이터 시각화
+- **Recharts** - 차트 및 그래프
+- **React Hot Toast** - 알림 시스템
+
+### PWA
+- **@ducanh2912/next-pwa** - 서비스 워커 및 매니페스트 생성
+
+### 배포
+- **Vercel** - 자동 배포 및 호스팅
+- **GitHub** - 버전 관리
+
+---
+
+## 🚀 시작하기
+
+### 설치
+
+```bash
+# 저장소 클론
+git clone https://github.com/yonghwan1106/civic-power-platform.git
+cd civic-power-platform
+
+# 의존성 설치
+npm install
+```
+
+### 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인하세요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 빌드
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 프로젝트 구조
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+civic-power-platform/
+├── src/
+│   ├── app/                    # Next.js App Router 페이지
+│   │   ├── page.tsx           # 메인 페이지
+│   │   ├── activities/        # 활동 목록 및 상세
+│   │   ├── my/                # 시민 대시보드
+│   │   ├── organization/      # 단체 대시보드
+│   │   └── api/               # API 라우트
+│   ├── components/            # 재사용 컴포넌트
+│   │   ├── layout/           # Header, Footer
+│   │   ├── ui/               # shadcn/ui 컴포넌트
+│   │   └── activity-*.tsx    # 활동 관련 컴포넌트
+│   ├── lib/                   # 유틸리티 및 로직
+│   │   ├── mock-data/        # 모크 데이터 생성
+│   │   └── matching.ts       # AI 매칭 알고리즘
+│   └── types/                 # TypeScript 타입 정의
+├── public/                    # 정적 파일
+│   ├── manifest.json         # PWA 매니페스트
+│   └── icons/                # 앱 아이콘
+└── docs/                      # 문서
+    └── improvements.md       # 개선사항 문서
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📊 주요 지표 (Mock Data)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **등록 사용자**: 500명
+- **참여 단체**: 50개
+- **진행 활동**: 200개
+- **참여 기록**: 2,000건
+- **카테고리**: 8개 (환경보호, 교육봉사, 노인복지 등)
+- **지역**: 용인시 전역 (수지구, 기흥구, 처인구)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🎨 주요 화면
+
+### 메인 페이지
+- Hero 섹션 (그라디언트 배경, AI 매칭 뱃지)
+- Feature 카드 (AI 매칭, 올인원 관리, 성과 측정)
+- 3단계 사용 프로세스
+- 통계 섹션
+- CTA 섹션
+
+### 활동 목록
+- 검색 및 필터
+- 무한 스크롤
+- 카테고리별 이미지
+
+### 활동 상세
+- 상세 정보 및 지도
+- 신청하기 버튼
+- 리뷰 및 평점
+
+### 시민 대시보드
+- 통계 카드
+- AI 추천 활동
+- 뱃지 및 레벨
+
+### 단체 대시보드
+- 월별 활동 추이 차트
+- 대기중 신청 관리
+- 예정 활동 목록
+
+---
+
+## 🔗 링크
+
+- **배포 사이트**: [https://civic-power-platform.vercel.app](https://civic-power-platform.vercel.app)
+- **GitHub**: [https://github.com/yonghwan1106/civic-power-platform](https://github.com/yonghwan1106/civic-power-platform)
+- **개선사항 문서**: [docs/improvements.md](docs/improvements.md)
+
+---
+
+## 📞 공모전 문의
+
+- **주최**: 국무조정실 시민사회비서관실
+- **전화**: 044-200-2852
+- **이메일**: sg008250@korea.kr
+- **홈페이지**: [https://civil.opm.go.kr](https://civil.opm.go.kr)
+
+---
+
+## 🏆 기대 효과
+
+### 시민 측면
+- 맞춤형 활동 추천으로 참여 장벽 낮춤
+- 간편한 신청 및 인증으로 편의성 향상
+- 뱃지/레벨 시스템으로 지속적 참여 동기 부여
+
+### 단체 측면
+- 효율적인 참여자 모집 및 관리
+- 데이터 기반 활동 분석 및 개선
+- 투명한 성과 측정 및 홍보
+
+### 정부 측면
+- 시민사회 활동 데이터 체계적 수집
+- 정책 수립을 위한 인사이트 확보
+- 정부-시민사회 협력 채널 강화
+
+### 사회 측면
+- 공익활동 문화 확산
+- 지역 공동체 활성화
+- 사회적 자본 축적
+
+---
+
+## 📝 라이선스
+
+이 프로젝트는 공익 목적으로 개발되었습니다.
+
+---
+
+## 👨‍💻 개발자
+
+**박용환**
+- GitHub: [@yonghwan1106](https://github.com/yonghwan1106)
+- 이메일: pyh@example.com (실제 이메일로 변경 필요)
+
+---
+
+## 🙏 감사의 글
+
+이 프로젝트는 국무조정실 시민사회비서관실의 「시민 공감차 아이디어 공모전」에 제출하기 위해 개발되었습니다. 시민사회 활성화와 정부-시민사회 협력 강화에 기여할 수 있기를 바랍니다.
