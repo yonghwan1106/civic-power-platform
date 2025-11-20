@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { MapPin, Users, Calendar, Clock } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -64,16 +65,16 @@ export function ActivityCard({ activity, matchingScore }: ActivityCardProps) {
       <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1 cursor-pointer overflow-hidden">
         {/* Thumbnail */}
         <div className="relative h-48 bg-muted overflow-hidden">
-          <img
+          <Image
             src={thumbnailUrl}
             alt={activity.title}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              e.currentTarget.src = getCategoryImage(activity.category)
-            }}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={false}
           />
           {matchingScore && matchingScore >= 70 && (
-            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+            <div className="absolute top-2 right-2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold z-10">
               {matchingScore}% 매칭
             </div>
           )}

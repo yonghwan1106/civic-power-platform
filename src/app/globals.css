@@ -89,3 +89,23 @@ body {
   @apply bg-background text-foreground;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "맑은 고딕", "Malgun Gothic", sans-serif;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 부드러운 transition 추가 */
+button, a {
+  transition: all 0.2s ease-in-out;
+}

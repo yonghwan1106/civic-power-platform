@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-16 fade-in">
         <div className="text-center space-y-4 mb-12">
           <h1 className="text-5xl font-bold text-primary">
             시민력 플랫폼
@@ -68,7 +68,7 @@ export default function Home() {
 
         <div className="mt-16 p-6 bg-muted rounded-lg">
           <h2 className="text-2xl font-bold mb-4">프로젝트 상태</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-3xl font-bold text-primary">500</p>
               <p className="text-sm text-muted-foreground">등록 사용자</p>

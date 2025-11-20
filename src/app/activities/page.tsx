@@ -27,9 +27,26 @@ export default function ActivitiesPage() {
   const [total, setTotal] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
 
+  // 검색 디바운싱
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPage(1) // 검색 시 첫 페이지로 이동
+      fetchActivities()
+    }, 500)
+
+    return () => clearTimeout(timer)
+  }, [search])
+
+  // 필터 변경 시 즉시 적용
+  useEffect(() => {
+    setPage(1)
+    fetchActivities()
+  }, [categories, districts, difficulty])
+
+  // 페이지 변경 시
   useEffect(() => {
     fetchActivities()
-  }, [search, categories, districts, difficulty, page])
+  }, [page])
 
   const fetchActivities = async () => {
     setLoading(true)

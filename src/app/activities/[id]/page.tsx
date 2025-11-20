@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   MapPin, Users, Calendar, Clock, AlertCircle, CheckCircle,
   Share2, Bookmark, ArrowLeft, Star
@@ -206,13 +207,13 @@ export default function ActivityDetailPage({
           <div className="lg:col-span-2 space-y-6">
             {/* Hero Image */}
             <div className="relative h-96 rounded-lg overflow-hidden bg-muted">
-              <img
+              <Image
                 src={activity.thumbnail || getCategoryImage(activity.category)}
                 alt={activity.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = getCategoryImage(activity.category)
-                }}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                priority
               />
             </div>
 
@@ -455,11 +456,11 @@ export default function ActivityDetailPage({
                     )}
 
                     <div className="flex gap-2">
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1" aria-label="활동 공유하기">
                         <Share2 className="w-4 h-4 mr-2" />
                         공유
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button variant="outline" className="flex-1" aria-label="활동 북마크에 저장">
                         <Bookmark className="w-4 h-4 mr-2" />
                         저장
                       </Button>
