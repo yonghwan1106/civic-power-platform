@@ -3,13 +3,14 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Home, Calendar, User, Building2 } from 'lucide-react'
+import { Menu, X, Home, Calendar, User, Building2, Info } from 'lucide-react'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navLinks = [
     { href: '/', label: '홈', icon: Home },
+    { href: '/about', label: '프로젝트 소개', icon: Info },
     { href: '/activities', label: '활동 찾기', icon: Calendar },
     { href: '/my', label: '내 활동', icon: User },
     { href: '/organization', label: '단체', icon: Building2 },
