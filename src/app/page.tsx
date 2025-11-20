@@ -26,7 +26,7 @@ export default function Home() {
           <div className="text-center space-y-8 max-w-4xl mx-auto fade-in">
             <Badge variant="secondary" className="px-4 py-2 text-sm">
               <Sparkles className="w-4 h-4 mr-2 inline" />
-              AI 기반 스마트 매칭 시스템
+              ｢제4회 시민 공감大 아이디어 공모전｣ 출품작
             </Badge>
 
             <h1 className="text-5xl md:text-7xl font-bold leading-tight">
