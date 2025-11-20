@@ -18,6 +18,31 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "시민력 플랫폼 - AI 기반 공익활동 매칭",
   description: "용인시 기반 AI 공익활동 매칭 & 관리 시스템",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "시민력 플랫폼",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#0ea5e9",
 };
 
 export default function RootLayout({

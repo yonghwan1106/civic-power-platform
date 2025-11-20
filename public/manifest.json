@@ -1,0 +1,29 @@
+{
+  "name": "시민력 플랫폼",
+  "short_name": "시민력",
+  "description": "AI 기반 지역 공익활동 매칭 & 관리 시스템",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "productivity"],
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}
