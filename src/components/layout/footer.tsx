@@ -74,7 +74,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 시민력 플랫폼. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} 시민력 플랫폼. All rights reserved.</p>
         </div>
       </div>
     </footer>

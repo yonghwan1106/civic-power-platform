@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Users, Calendar, Clock, Star, TrendingUp, UserCheck, Activity as ActivityIcon,
   Plus, BarChart3
@@ -74,10 +75,32 @@ export default function OrganizationDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">로딩 중...</p>
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Skeleton className="w-16 h-16 rounded-full" />
+                <div className="space-y-2">
+                  <Skeleton className="h-8 w-48" />
+                  <Skeleton className="h-4 w-64" />
+                </div>
+              </div>
+              <Skeleton className="h-12 w-40" />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {[...Array(4)].map((_, i) => (
+              <Card key={i}>
+                <CardHeader className="pb-2">
+                  <Skeleton className="h-4 w-20" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-10 w-24" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     )

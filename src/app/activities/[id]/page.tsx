@@ -9,6 +9,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface ActivityDetail {
   id: string
@@ -83,6 +84,19 @@ const difficultyLabels: Record<string, string> = {
   hard: '어려움',
 }
 
+const getCategoryImage = (category: string) => {
+  const imageMap: Record<string, string> = {
+    environment: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&h=600&fit=crop',
+    education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=600&fit=crop',
+    welfare: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&h=600&fit=crop',
+    culture: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&h=600&fit=crop',
+    animal: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1200&h=600&fit=crop',
+    disaster: 'https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?w=1200&h=600&fit=crop',
+    other: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&h=600&fit=crop',
+  }
+  return imageMap[category] || imageMap.other
+}
+
 export default function ActivityDetailPage({
   params,
 }: {
@@ -113,10 +127,47 @@ export default function ActivityDetailPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">로딩 중...</p>
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8">
+          <Skeleton className="h-10 w-32 mb-6" />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
+              <Skeleton className="h-96 w-full rounded-lg" />
+              <div className="space-y-3">
+                <div className="flex gap-2">
+                  <Skeleton className="h-6 w-16" />
+                  <Skeleton className="h-6 w-16" />
+                  <Skeleton className="h-6 w-20" />
+                </div>
+                <Skeleton className="h-12 w-3/4" />
+                <div className="flex items-center gap-3">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-24" />
+                  </div>
+                </div>
+              </div>
+              <Card>
+                <CardHeader>
+                  <Skeleton className="h-6 w-24" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-24 w-full" />
+                </CardContent>
+              </Card>
+            </div>
+            <div className="space-y-6">
+              <Card>
+                <CardContent className="pt-6 space-y-4">
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-6 w-full" />
+                  <Skeleton className="h-12 w-full" />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -154,18 +205,16 @@ export default function ActivityDetailPage({
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Hero Image */}
-            {activity.thumbnail && (
-              <div className="relative h-96 rounded-lg overflow-hidden bg-muted">
-                <img
-                  src={activity.thumbnail}
-                  alt={activity.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = `https://placehold.co/1200x600/0ea5e9/white?text=${encodeURIComponent(activity.title)}`
-                  }}
-                />
-              </div>
-            )}
+            <div className="relative h-96 rounded-lg overflow-hidden bg-muted">
+              <img
+                src={activity.thumbnail || getCategoryImage(activity.category)}
+                alt={activity.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = getCategoryImage(activity.category)
+                }}
+              />
+            </div>
 
             {/* Header */}
             <div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { ActivityCard } from '@/components/activities/activity-card'
 import { ActivityFilters } from '@/components/activities/activity-filters'
 import { Button } from '@/components/ui/button'
+import toast from 'react-hot-toast'
 import type { Category, District, Difficulty, Activity as ActivityType } from '@/types'
 
 type Activity = ActivityType & {
@@ -51,9 +52,12 @@ export default function ActivitiesPage() {
         setActivities(result.data.items)
         setTotal(result.data.total)
         setTotalPages(result.data.totalPages)
+      } else {
+        toast.error('활동 목록을 불러오는데 실패했습니다.')
       }
     } catch (error) {
       console.error('Failed to fetch activities:', error)
+      toast.error('네트워크 오류가 발생했습니다. 다시 시도해주세요.')
     } finally {
       setLoading(false)
     }

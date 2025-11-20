@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ActivityCard } from '@/components/activities/activity-card'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Trophy, Clock, Calendar, Star, TrendingUp, Award
 } from 'lucide-react'
@@ -112,10 +113,29 @@ export default function MyDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">로딩 중...</p>
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-8">
+            <div className="flex items-center gap-4">
+              <Skeleton className="w-20 h-20 rounded-full" />
+              <div className="space-y-2">
+                <Skeleton className="h-8 w-64" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {[...Array(4)].map((_, i) => (
+              <Card key={i}>
+                <CardHeader className="pb-2">
+                  <Skeleton className="h-4 w-20" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-10 w-24" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     )
