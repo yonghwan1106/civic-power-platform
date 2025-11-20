@@ -54,16 +54,16 @@ export default function Home() {
         </div>
 
         <div className="text-center space-x-4">
-          <Link href="/activities">
-            <Button size="lg">
+          <Button size="lg" asChild>
+            <Link href="/activities">
               활동 둘러보기
-            </Button>
-          </Link>
-          <Link href="/my">
-            <Button size="lg" variant="outline">
+            </Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link href="/my">
               시작하기
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
 
         <div className="mt-16 p-6 bg-muted rounded-lg">
