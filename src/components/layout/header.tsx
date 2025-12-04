@@ -4,9 +4,17 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X, Home, Calendar, User, Building2, Info, Users, Award, FileText } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const handleAuthClick = () => {
+    toast('🚧 준비 중인 기능입니다', {
+      icon: '🔒',
+      duration: 2000,
+    })
+  }
 
   const navLinks = [
     { href: '/', label: '홈', icon: Home },
@@ -52,10 +60,10 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={handleAuthClick}>
               로그인
             </Button>
-            <Button size="sm">
+            <Button size="sm" onClick={handleAuthClick}>
               회원가입
             </Button>
           </div>
@@ -94,10 +102,10 @@ export function Header() {
                 )
               })}
               <div className="flex flex-col gap-2 pt-4 border-t">
-                <Button variant="ghost" size="sm" className="w-full">
+                <Button variant="ghost" size="sm" className="w-full" onClick={handleAuthClick}>
                   로그인
                 </Button>
-                <Button size="sm" className="w-full">
+                <Button size="sm" className="w-full" onClick={handleAuthClick}>
                   회원가입
                 </Button>
               </div>
