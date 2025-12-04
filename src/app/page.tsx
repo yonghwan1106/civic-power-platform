@@ -39,7 +39,7 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               AI가 추천하는 나에게 꼭 맞는 봉사활동,
               <br />
-              <span className="text-foreground font-semibold">용인시 공익활동의 새로운 기준</span>
+              <span className="text-foreground font-semibold">시민 공익활동의 새로운 기준</span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">

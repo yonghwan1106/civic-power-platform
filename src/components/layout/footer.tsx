@@ -66,7 +66,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-4">연락처</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>경기도 용인시</li>
+              <li>대한민국</li>
               <li>이메일: info@civicpower.kr</li>
               <li>전화: 031-1234-5678</li>
             </ul>

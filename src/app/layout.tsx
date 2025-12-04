@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "시민력 플랫폼 - AI 기반 공익활동 매칭",
-  description: "용인시 기반 AI 공익활동 매칭 & 관리 시스템",
+  description: "AI 기반 공익활동 매칭 & 관리 시스템",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

@@ -129,7 +129,7 @@ export default function ActivitiesPage() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">봉사활동 둘러보기</h1>
           <p className="text-muted-foreground">
-            용인시에서 진행되는 다양한 봉사활동을 찾아보세요
+            전국에서 진행되는 다양한 봉사활동을 찾아보세요
           </p>
         </div>
 
