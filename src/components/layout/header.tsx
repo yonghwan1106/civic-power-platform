@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X, Home, Calendar, User, Building2, Info } from 'lucide-react'
+import { Menu, X, Home, Calendar, User, Building2, Info, Users, Award, FileText } from 'lucide-react'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -12,7 +12,10 @@ export function Header() {
     { href: '/', label: '홈', icon: Home },
     { href: '/about', label: '프로젝트 소개', icon: Info },
     { href: '/activities', label: '활동 찾기', icon: Calendar },
+    { href: '/community', label: '커뮤니티', icon: Users },
     { href: '/my', label: '내 활동', icon: User },
+    { href: '/certificates', label: '인증서', icon: Award },
+    { href: '/reports', label: '보고서', icon: FileText },
     { href: '/organization', label: '단체', icon: Building2 },
   ]
 

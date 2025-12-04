@@ -422,3 +422,25 @@ export interface SearchParams {
   page?: number
   pageSize?: number
 }
+
+// ==================== Certificate ====================
+
+export type CertificateStatus = 'issued' | 'pending' | 'revoked'
+
+export interface Certificate {
+  id: string
+  participationId: string
+  userId: string
+  userName: string
+  activityId: string
+  activityTitle: string
+  activityDate: string
+  organizationId: string
+  organizationName: string
+  hours: number
+  certificateNumber: string
+  status: CertificateStatus
+  issuedAt: string
+  issuedBy: string
+  verificationUrl?: string
+}

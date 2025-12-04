@@ -10,6 +10,7 @@ import type {
   UserPreferences,
   OrganizationMember,
   Category,
+  Certificate,
 } from '@/types'
 
 import {
@@ -436,6 +437,64 @@ export function generatePosts(
   return Array.from({ length: count }, (_, i) => generatePost(i, users, activities))
 }
 
+// ==================== Generate Certificates ====================
+
+export function generateCertificate(
+  participation: Participation,
+  user: User,
+  activity: Activity,
+  organization: Organization
+): Certificate {
+  const startHour = parseInt(activity.startTime.split(':')[0])
+  const endHour = parseInt(activity.endTime.split(':')[0])
+  const hours = endHour - startHour
+
+  return {
+    id: generateId('cert-'),
+    participationId: participation.id,
+    userId: user.id,
+    userName: user.name,
+    activityId: activity.id,
+    activityTitle: activity.title,
+    activityDate: activity.date,
+    organizationId: organization.id,
+    organizationName: organization.name,
+    hours,
+    certificateNumber: participation.certificateNumber || `CERT-${randomInt(100000, 999999)}`,
+    status: 'issued',
+    issuedAt: randomDate(new Date(activity.date), new Date()).toISOString(),
+    issuedBy: organization.name,
+    verificationUrl: `https://civic-power.vercel.app/verify/${participation.certificateNumber}`,
+  }
+}
+
+export function generateCertificates(
+  participations: Participation[],
+  users: User[],
+  activities: Activity[],
+  organizations: Organization[]
+): Certificate[] {
+  const certificates: Certificate[] = []
+
+  const attendedParticipations = participations.filter(
+    p => p.status === 'attended' && p.certificateIssued
+  )
+
+  for (const participation of attendedParticipations) {
+    const user = users.find(u => u.id === participation.userId)
+    const activity = activities.find(a => a.id === participation.activityId)
+
+    if (user && activity) {
+      const organization = organizations.find(o => o.id === activity.organizationId)
+      if (organization) {
+        certificates.push(generateCertificate(participation, user, activity, organization))
+      }
+    }
+  }
+
+  return certificates
+}
+
 // ==================== Generate All Mock Data ====================
 
 export function generateAllMockData() {
@@ -459,6 +518,9 @@ export function generateAllMockData() {
   const posts = generatePosts(300, users, activities)
   console.log(`✓ Generated ${posts.length} posts`)
 
+  const certificates = generateCertificates(participations, users, activities, organizations)
+  console.log(`✓ Generated ${certificates.length} certificates`)
+
   const badges: Badge[] = badgeData.map(b => ({
     id: b.id,
     name: b.name,
@@ -473,6 +535,7 @@ export function generateAllMockData() {
     participations,
     reviews,
     posts,
+    certificates,
     badges,
   }
 }
